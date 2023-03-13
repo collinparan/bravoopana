@@ -9,7 +9,7 @@ numpy
 pandas
 scikit-learn
 scipy
-SQLAlchemy 
+SQLAlchemy<2.0.0
 sqlalchemy-utils
 matplotlib
 pydantic

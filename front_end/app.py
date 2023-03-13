@@ -23,7 +23,7 @@ from pandas.io.json import json_normalize
 import numpy as np
 import requests
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 parent_dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -97,7 +97,7 @@ async def mathadd(a: int, b: int):
             summary="Hello World",
             description="Database Timestamp")
 async def hellodb():
-    df = pd.read_sql_query('SELECT CURRENT_TIMESTAMP as "realtime_data";', engine)
+    df = pd.read_sql_query(text('SELECT CURRENT_TIMESTAMP as "realtime_data";'), engine)
     return df.to_dict(orient='records')
 
 # HTML test
