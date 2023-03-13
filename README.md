@@ -28,7 +28,7 @@ docker-compose up -d --force-recreate --build <container name>
 ```
 Example:
 ```
-docker-compose up -d --force-recreate --build front_end
+docker-compose up -d --force-recreate --build bravo_frontend
 ```
 
 # Running only the tools 
