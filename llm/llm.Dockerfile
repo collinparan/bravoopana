@@ -1,10 +1,10 @@
-FROM python:3.11.1-buster
+FROM python:3.10-buster
 
-WORKDIR /llm_assistant
-COPY ./requirements.txt ./
+WORKDIR /llm
+COPY ./llm/requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt 
-COPY ./ ./
+COPY ./llm ./
 RUN chmod u+x llm.py 
 
 ENTRYPOINT ["python","llm.py"]

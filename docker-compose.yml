@@ -28,8 +28,6 @@ services:
         build:
             context: .
             dockerfile: ./etl/etl.Dockerfile
-            tags:
-              - "etl:bravo"
         container_name: bravo_etl
         user: root
         env_file:

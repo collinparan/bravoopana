@@ -1,10 +1,10 @@
-FROM python:3.11.1-buster
+FROM python:3.10-buster
 
-WORKDIR /front_end
-COPY ./requirements.txt ./
+WORKDIR /etl
+COPY ./etl/requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt 
-COPY ./ ./
+COPY ./etl ./
 RUN chmod u+x etl.py 
 
 ENTRYPOINT ["python","etl.py"]
