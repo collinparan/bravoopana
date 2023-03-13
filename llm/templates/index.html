@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head> 
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../src/bootstrap.min.css" rel="stylesheet">
+        <link href="../src/cards.css" rel="stylesheet">
+        <script src="../src/plotly-latest.min.js"></script>
+
+        <title>{{title}}</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row"><h1 style='text-align: center;'>{{title}}</h1></div>
+            <!-- <div class="row">
+                <div class="col">
+                    <div class="shadow p-3 mb-5 bg-white rounded card">
+                        <div class="card-body">
+                            <h4 class="card-title">ROI</h4>
+                            <p class="card-target">Return On Investment</p>
+                            <p id="roi-card-text" class="card-value">$ 10,000,000.00</p>
+                            <span class="card-diff-up">▲</span><span class="card-diff-up"> 2.0% change</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="shadow p-3 mb-5 bg-white rounded card">
+                        <div class="card-body">
+                            <h4 class="card-title">ROI</h4>
+                            <p class="card-target">Return On Investment</p>
+                            <p id="roi-card-text" class="card-value">$ 10,000,000.00</p>
+                            <span class="card-diff-up">▲</span><span class="card-diff-up"> 2.0% change</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="shadow p-3 mb-5 bg-white rounded card">
+                        <div class="card-body">
+                            <h4 class="card-title">ROI</h4>
+                            <p class="card-target">Return On Investment</p>
+                            <p id="roi-card-text" class="card-value">$ 10,000,000.00</p>
+                            <span class="card-diff-up">▲</span><span class="card-diff-up"> 2.0% change</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="row">
+              <div class="col">
+                {% block maps %}
+                {{map | safe }}
+                {% endblock %}
+              </div>
+              <div class="col">
+                {% block plots %}
+                {{plot | safe }}
+                {% endblock %}
+              </div>
+            </div>
+        </div>
+        <script src="../src/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

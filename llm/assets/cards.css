@@ -1,0 +1,28 @@
+.card {
+    text-align: center;
+}
+.card .card-title {
+    text-align: center;
+    font-weight: lighter;
+}
+
+.card .card-value {
+    font-size: 1rem;
+}
+
+.card .card-target {
+    font-size: 0.5rem;
+    font-weight: lighter;
+}
+
+.card .card-diff-down {
+    color: red
+}
+
+.card .card-diff-up {
+    color: green
+}
+
+.card .card-diff-no-change {
+    color: black
+}
