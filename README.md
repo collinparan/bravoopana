@@ -30,3 +30,17 @@ Example:
 ```
 docker-compose up -d --force-recreate --build front_end
 ```
+
+# Running only the tools 
+
+```
+docker-compose -f docker-compose.tools.yml up -d --force-recreate --build
+```
+
+# Research Reference Materials
+
+Tagging: https://docs.docker.com/build/bake/compose-file/#specification
+Tagging 2: https://stackoverflow.com/questions/33816456/how-to-tag-docker-image-with-docker-compose
+
+Tarball offline: https://dev.to/shandesai/prepare-your-docker-compose-stack-as-a-tarball-for-offline-installations-40cd
+

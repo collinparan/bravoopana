@@ -1,0 +1,114 @@
+version : '3.8'
+
+services:
+    bravo_database:
+        build:
+            context: .
+            dockerfile: ./database/pgdb.Dockerfile
+        container_name: bravo_database
+        user: root
+        env_file:
+            - prod.env
+        ports:
+            - "5432:5432"
+    bravo_cache:
+        build:
+            context: .
+            dockerfile: ./cache/money.Dockerfile
+        container_name: bravo_cache
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./cache/data:/data
+        entrypoint: redis-server --save 60 1 --loglevel warning
+        ports:
+            - "6379:6379"
+    bravo_etl:
+        build:
+            context: .
+            dockerfile: ./etl/etl.Dockerfile
+            tags:
+              - "etl:bravo"
+        container_name: bravo_etl
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./etl:/etl
+            - type: bind
+              source: ./shared_volume
+              target: /etl/shared_volume
+        entrypoint: watchmedo auto-restart --recursive --pattern="*.txt, *.csv, *.py" --directory="." python etl.py
+        depends_on:
+            - bravo_database
+            - bravo_cache
+    bravo_llm:
+        build:
+            context: .
+            dockerfile: ./llm/llm.Dockerfile
+        container_name: bravo_llm
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./llm:/llm
+            - type: bind
+              source: ./shared_volume
+              target: /llm/shared_volume
+        entrypoint: watchmedo auto-restart --recursive --pattern="*.txt, *.csv, *.py" --directory="." python llm.py
+        ports:
+            - "81:81"
+        depends_on:
+            - bravo_database
+            - bravo_cache
+    bravo_frontend:
+        build:
+            context: .
+            dockerfile: ./front_end/app.Dockerfile
+        container_name: bravo_frontend
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./front_end:/front_end 755
+            - type: bind
+              source: ./shared_volume
+              target: /front_end/shared_volume
+        entrypoint: watchmedo auto-restart --recursive --pattern="*.txt, *.csv, *.py, *.html, *.js" --directory="." python app.py
+        ports:
+            - "80:80"
+        depends_on:
+            - bravo_database
+            - bravo_cache
+    tools_vscode:
+        build:
+            context: .
+            dockerfile: ./tools_vscode/vs.Dockerfile
+        container_name: tools_vscode
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./tools_vscode:/tools_vcode 755
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        ports:
+            - "8443:8443"
+    tools_dbeaver:
+        build:
+            context: .
+            dockerfile: ./tools_dbeaver/dbeaver.Dockerfile
+        container_name: tools_dbeaver
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./tools_dbeaver/workspace:/opt/cloudbeaver/workspace 755
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        ports:
+            - "8978:8978"
+        depends_on:
+            - bravo_database
+    

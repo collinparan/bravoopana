@@ -1,0 +1,36 @@
+version : '3.8'
+
+services:
+    tools_vscode:
+        build:
+            context: .
+            dockerfile: ./tools_vscode/vs.Dockerfile
+            tag:
+              - "tools_vscode:bravo"
+        container_name: tools_vscode
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./tools_vscode:/tools_vcode 755
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        ports:
+            - "8443:8443"
+    tools_dbeaver:
+        build:
+            context: .
+            dockerfile: ./tools_dbeaver/dbeaver.Dockerfile
+            tag:
+              - "tools_dbeaver:bravo"
+        container_name: tools_dbeaver
+        user: root
+        env_file:
+            - prod.env
+        volumes:
+            - ./tools_dbeaver/workspace:/opt/cloudbeaver/workspace 755
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        ports:
+            - "8978:8978"
+    
