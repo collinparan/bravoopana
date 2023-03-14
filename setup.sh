@@ -22,12 +22,12 @@ function update_tags(){
 
 function make_tar(){
     echo "Building tar...";
-    (docker save -o bravoStack.tar $(docker image ls *:bravo));
+    (docker save -o bravostack.tar $(docker image ls bravo_ready*));
 }
 
 function load_tar(){
     echo "Loading tar...";
-    (docker load -i bravoStack.tar);
+    (docker load -i bravostack.tar);
 }
 
 function remove_docker_cache(){
