@@ -1,3 +1,4 @@
+*.tar
 /cache/data
 /tools_dbeaver/workspace
 

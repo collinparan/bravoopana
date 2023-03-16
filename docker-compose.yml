@@ -1,21 +1,21 @@
 version : '3.8'
 
 services:
-    bravo_database:
+    bravodb:
         build:
             context: .
             dockerfile: ./database/pgdb.Dockerfile
-        container_name: bravo_database
+        container_name: bravodb
         user: root
         env_file:
             - prod.env
         ports:
             - "5432:5432"
-    bravo_cache:
+    bravocache:
         build:
             context: .
             dockerfile: ./cache/money.Dockerfile
-        container_name: bravo_cache
+        container_name: bravocache
         user: root
         env_file:
             - prod.env
@@ -24,11 +24,11 @@ services:
         entrypoint: redis-server --save 60 1 --loglevel warning
         ports:
             - "6379:6379"
-    bravo_etl:
+    bravoetl:
         build:
             context: .
             dockerfile: ./etl/etl.Dockerfile
-        container_name: bravo_etl
+        container_name: bravoetl
         user: root
         env_file:
             - prod.env
@@ -39,13 +39,13 @@ services:
               target: /etl/shared_volume
         entrypoint: watchmedo auto-restart --recursive --pattern="*.txt, *.csv, *.py" --directory="." python etl.py
         depends_on:
-            - bravo_database
-            - bravo_cache
-    bravo_llm:
+            - bravodb
+            - bravocache
+    bravollm:
         build:
             context: .
             dockerfile: ./llm/llm.Dockerfile
-        container_name: bravo_llm
+        container_name: bravollm
         user: root
         env_file:
             - prod.env
@@ -58,13 +58,13 @@ services:
         ports:
             - "81:81"
         depends_on:
-            - bravo_database
-            - bravo_cache
-    bravo_frontend:
+            - bravodb
+            - bravocache
+    bravofrontend:
         build:
             context: .
             dockerfile: ./front_end/app.Dockerfile
-        container_name: bravo_frontend
+        container_name: bravofrontend
         user: root
         env_file:
             - prod.env
@@ -77,13 +77,13 @@ services:
         ports:
             - "80:80"
         depends_on:
-            - bravo_database
-            - bravo_cache
-    tools_vscode:
+            - bravodb
+            - bravocache
+    bravotoolsvscode:
         build:
             context: .
             dockerfile: ./tools_vscode/vs.Dockerfile
-        container_name: tools_vscode
+        container_name: bravotoolsvscode
         user: root
         env_file:
             - prod.env
@@ -93,11 +93,11 @@ services:
             - "host.docker.internal:host-gateway"
         ports:
             - "8443:8443"
-    tools_dbeaver:
+    bravotoolsdbeaver:
         build:
             context: .
             dockerfile: ./tools_dbeaver/dbeaver.Dockerfile
-        container_name: tools_dbeaver
+        container_name: bravotoolsdbeaver
         user: root
         env_file:
             - prod.env
@@ -108,5 +108,5 @@ services:
         ports:
             - "8978:8978"
         depends_on:
-            - bravo_database
+            - bravodb
     
