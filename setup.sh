@@ -15,10 +15,10 @@ function run_all_containers(){
 function update_reponames(){
     echo "Updating repo names...";
     # Get a list of Docker images and iterate through them
-    for image in $(docker images | awk '{print $1}' | grep "bravoopana_")
+    for image in $(docker images | awk '{print $1}' | grep "bravoopana-")
     do
     # Get the current image tag without the prepended name and underscore
-    tag=$(echo $image | sed 's/bravoopana_//')
+    tag=$(echo $image | sed 's/bravoopana-//')
 
     # Tag the image with the new tag
     docker tag $image $tag
